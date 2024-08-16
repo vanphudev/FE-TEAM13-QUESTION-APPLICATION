@@ -13,10 +13,6 @@ const App = () => {
             {/* Header */}
             {/* Menu Option */}
             <RouterPublic Home={Home} />
-            <div className='app'>
-               <h1>{Data.title}</h1>
-               <p>{Data.description}</p>
-            </div>
             {/* Footer  */}
          </BrowserRouter>
       </>

@@ -1,12 +1,7 @@
-import React from "react";
+import Main from "../layouts/main.jsx";
 
 const Home = () => {
-   return (
-      <>
-         <h1>Home</h1>
-         <p>Home Page</p>
-      </>
-   );
+   return <Main />;
 };
 
 export default Home;

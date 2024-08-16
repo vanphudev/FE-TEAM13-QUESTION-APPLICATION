@@ -1,4 +1,4 @@
-export const mockData = {
+const mockData = {
    listsQuestion: [
       {
          id: "00001",
@@ -80,3 +80,5 @@ export const mockData = {
       {id: "user02", name: "Văn Phú", password: "123", userName: "vanphu", role: "user"},
    ],
 };
+
+export default mockData;
