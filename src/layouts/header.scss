@@ -1,0 +1,135 @@
+@use "sass:map";
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #000000;
+  color: white;
+}
+.row{
+  height: 150px;
+  
+}
+.logo1{
+  position: relative;
+  height: auto; // Chiều cao tự động điều chỉnh để giữ nguyên tỷ lệ
+  left:-5px;
+  width: 30px;
+}
+.logo{
+  width: 150px;
+  height: 110px;
+  padding: 10px 0 13px;
+  position: absolute; // Đặt vị trí tuyệt đối cho logo
+  top:2px; // Dịch chuyển logo lên trên 50% của container
+  left: 45%;
+  right: 50%; // Dịch chuyển logo sang trái 50% của container
+}
+
+.header-center {
+  flex: 2; /* Đảm bảo rằng phần tử chứa logo chiếm nhiều không gian hơn */
+  display: flex;
+  justify-content: center; /* Căn giữa logo */
+  align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.logo {
+  width: 250px;
+  height: 100px;
+  padding: 10px 0 13px;
+  position: absolute; // Đặt vị trí tuyệt đối cho logo
+  top:8px; // Dịch chuyển logo lên trên 50% của container
+  left: 45%;
+  right: 50%;
+}
+
+.searchheader {
+  display: flex;
+  align-items: center;
+  margin-left: 20px; /* Thêm khoảng cách giữa logo và thanh tìm kiếm */
+}
+
+.search-bar {
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+}
+
+.search-icon {
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+}
+
+.header-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; /* Căn giữa các biểu tượng theo chiều dọc */
+  padding: 20px 0 15px;
+}
+
+.header-right ul {
+  display: flex;
+  column-gap: 10px;
+  list-style: none;
+  margin: 0; /* Xóa khoảng cách mặc định của ul */
+  padding: 0; /* Xóa khoảng cách mặc định của ul */
+}
+
+.header-right li {
+  display: flex;
+  align-items: center;
+}
+
+.header-right a {
+  font-size: 25px;
+  color: white; /* Đảm bảo rằng màu biểu tượng là trắng để dễ nhìn trên nền đen */
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Xóa gạch chân của liên kết */
+}
+
+.header-right .icon {
+  display: flex;
+  align-items: center; /* Đảm bảo rằng các biểu tượng được căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa nội dung của liên kết */
+}
+
+.login {
+  display: flex;
+  align-items: center;
+}
+
+.login-btn, .logout-btn {
+  margin-right: 10px; /* Điều chỉnh khoảng cách giữa các nút */
+  padding: 10px 20px;
+  border: none;
+  background-color: #555;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+.login-btn:hover, .logout-btn:hover {
+  background-color: #777;
+}
+.header_top_left {
+  display:flex ;
+  align-items: center;
+  font-size: 15px;
+  
+  ul{
+      list-style: none;
+      padding-left: 0%;
+      margin-left: 60px;
+      margin-top:-10px;
+      li{
+          display: flex;
+          align-items: center;
+      }
+  }
+}
