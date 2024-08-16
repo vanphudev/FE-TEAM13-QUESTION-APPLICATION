@@ -9,7 +9,7 @@
 -  **Thực tập sinh**: Chịu trách nhiệm thực hiện các chức năng CRUD (Create, Read, Update, Delete) đối với câu hỏi.
 -  **Admin**: Có quyền trả lời và xóa câu hỏi.
 
-## Công nghệ Sử dụng
+## Công nghệ Sử dụng update
 
 -  **ReactJS**: Thư viện JavaScript để xây dựng giao diện người dùng.
 -  **Vite**: Công cụ build cực nhanh dành cho các dự án frontend.
