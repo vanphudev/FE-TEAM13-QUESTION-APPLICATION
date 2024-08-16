@@ -4,7 +4,7 @@
 
 **QUESTION APPLICATION** là một ứng dụng web cho phép thực tâp sinh đặt câu hỏi và admin trả lời câu hỏi. Ứng dụng được xây dựng bằng ReactJS và Vite.
 
-## Vai trò
+## Vai trò:
 
 -  **Thực tập sinh**: Chịu trách nhiệm thực hiện các chức năng CRUD (Create, Read, Update, Delete) đối với câu hỏi.
 -  **Admin**: Có quyền trả lời và xóa câu hỏi.
