@@ -1,7 +1,7 @@
-import React from "react";
+import Main from "../layouts/main.jsx";
 
 const Home = () => {
-   return <>{/* Nội dung Main Page */}</>;
+   return <Main />;
 };
 
 export default Home;
