@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './header.scss';
 import logo from '../assets/icons/logo-white.png';
 import logo1 from '../assets/icons/logo-amazing-tech-v2.png';
-import { AiOutlineFacebook, AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineFacebook, AiOutlineMail, AiOutlineUser, AiOutlineSearch } from 'react-icons/ai';
 import { BiLogoMessenger, BiPhone } from 'react-icons/bi';
+import SearchModal from '../components/SearchModel/SearchModal';
 
 const Header = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
+
   return (
     <header className="header">
       <div className="header_top_left">
@@ -28,7 +34,13 @@ const Header = () => {
         <img src={logo} alt="Logo" className="logo" />
       </div>
       <div className="searchheader">
-        <input type="text" placeholder="Search..." className="search-bar" />
+        <input 
+          type="text" 
+          placeholder="Search..." 
+          className="search-bar"
+          onClick={handleOpen} // Mở Modal khi nhấn vào thanh tìm kiếm
+        />
+        <AiOutlineSearch className="search-icon" onClick={handleOpen} /> {/* Thêm biểu tượng kính lúp */}
       </div>
       <div className="header-right">
         <ul>
@@ -47,18 +59,20 @@ const Header = () => {
               <BiPhone />
             </a>
           </li>
-          
           <li>
             <Link to="/profile" className="icon">
               <AiOutlineUser />
             </Link>
             <div className="login">
               <button className="login-btn">Login</button>
-              <button className="logout-btn">Logout</button>
+              <button className="logout-btn">Register</button>
             </div>
           </li>
         </ul>
       </div>
+
+      {/* Thêm component SearchModal */}
+      <SearchModal open={modalOpen} handleClose={handleClose} />
     </header>
   );
 };
