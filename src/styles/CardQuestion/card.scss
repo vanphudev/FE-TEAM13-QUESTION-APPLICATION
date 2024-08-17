@@ -1,0 +1,19 @@
+.MuiCardHeader-action {
+   margin: 0px !important;
+   padding: 0px !important;
+}
+
+.MuiCardHeader-content {
+   flex: 1 1 auto;
+}
+
+.MuiAvatarGroup-root {
+   .MuiAvatar-root {
+      border: 1px solid #fff !important;
+   }
+}
+
+.MuiPagination-ul{
+   justify-content: center;
+   margin-top: 20px;
+}

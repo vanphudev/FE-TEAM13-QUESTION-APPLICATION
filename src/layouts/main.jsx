@@ -7,10 +7,13 @@ const Main = () => {
       <>
          <Box
             sx={{
-               backgroundColor: (theme) => (theme.palette.mode === "dark" ? "#ffffff" : "#55A630"),
+               backgroundColor: (theme) =>
+                  theme.mode === "dark" ? theme.colorSchemes.dark.bg.secondary : theme.colorSchemes.light.bg.secondary,
                width: "100%",
+               overflow: "hidden",
                height: "max-content",
-               padding: "10px 0",
+               padding: "10px",
+               margin: "0 auto",
             }}>
             <ListCardQuestion listQuestions={mockData?.listsQuestion} />
          </Box>

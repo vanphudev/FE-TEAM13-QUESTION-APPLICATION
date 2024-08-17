@@ -1,91 +1,198 @@
-import AddCardIcon from "@mui/icons-material/AddCard";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import Tooltip from "@mui/material/Tooltip";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import EditIcon from "@mui/icons-material/Edit";
+import {red} from "@mui/material/colors";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ReplyIcon from "@mui/icons-material/Reply";
+import "../../styles/CardQuestion/card.scss";
+import TextTruncate from "react-text-truncate";
+import QuickreplyIcon from "@mui/icons-material/Quickreply";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+import {useTheme} from "@mui/material/styles";
+import useWindowSize from "../../utils/useWindowSize";
+
+function caculateWidth(windowSize) {
+   if (windowSize > 2050) {
+      return windowSize / 5 - 10 * 4;
+   } else if (windowSize > 1650) {
+      return windowSize / 4 - 10 * 3;
+   } else if (windowSize > 1250) {
+      return windowSize / 3 - 10 * 2;
+   } else if (windowSize > 850) {
+      return windowSize / 2 - 10;
+   } else {
+      return 450;
+   }
+}
 
 function CardQuestion({card}) {
+   const sizeCard = caculateWidth(useWindowSize().width);
+   const [themeMode, setThemeMode] = React.useState(
+      useTheme().mode === "light" ? useTheme().colorSchemes.light : useTheme().colorSchemes.dark
+   );
    return (
-      <Box
+      <Card
          sx={{
-            minWidth: "300px",
-            maxWidth: "300px",
-            backgroundColor: (theme) => (theme.palette.mode === "dark" ? "#80B918" : "#ebecf0"),
-            ml: 2,
-            borderRadius: "6px",
-            height: "fit-content",
-            mb: 2,
+            width: sizeCard + "px",
+            height: "max-content",
+            backgroundColor: "rgba(255, 255, 255, .015)",
+            webkitBackdropFilter: "blur(15px)",
+            backdropFilter: "blur(2px)",
+            borderRadius: "10px",
+            boxSizing: "border-box",
+            border: `2px solid ` + themeMode.border.secondary,
+            ":hover": {
+               border: "2px solid " + themeMode.border.hover,
+            },
+            color: themeMode.text.primary,
+            cursor: "pointer",
          }}>
-         <Box
+         <CardHeader
             sx={{
-               padding: 2,
-               display: "flex",
-               alignItems: "center",
-               justifyContent: "space-between",
+               padding: "10px",
+            }}
+            avatar={
+               <Avatar sx={{bgcolor: red[500]}} aria-label='recipe'>
+                  R
+               </Avatar>
+            }
+            action={[
+               <React.Fragment>
+                  <IconButton>
+                     <ModeEditIcon sx={{color: "green"}} />
+                  </IconButton>
+                  <IconButton>
+                     <DeleteOutlineIcon sx={{color: "red"}} />
+                  </IconButton>
+               </React.Fragment>,
+            ]}
+            title={<TextTruncate line={1} element='span' truncateText='…' text={card?.userName} />}
+            subheader={
+               <Typography>
+                  <span
+                     style={{
+                        color: themeMode.text.title,
+                     }}>
+                     Question at
+                  </span>{" "}
+                  {card?.createdAt}{" "}
+               </Typography>
+            }
+         />
+         <CardContent
+            sx={{
+               padding: "0px 18px",
+               height: "80px",
+               color: themeMode.text.primary,
             }}>
             <Typography
                variant='h6'
+               component='div'
                sx={{
-                  fontSize: "1rem",
-                  fontWeight: "bold",
-                  cursor: "pointer",
+                  color: themeMode.text.title,
                }}>
-               {card?.descriptionQuestion}
-               <Tooltip title='Edit'>
-                  <EditIcon sx={{color: "#95a5a6", cursor: "pointer", fontSize: "large", ml: 1}} />
-               </Tooltip>
+               {<TextTruncate line={1} element='span' truncateText='…' text={card?.titleQuestion} />}
             </Typography>
-            <Box>
-               <Tooltip title='Delete'>
-                  <DeleteOutlineIcon
-                     sx={{color: "text.primary", cursor: "pointer"}}
-                     id='basic-card-dropdown'
-                     aria-controls={open ? "basic-menu-card-dropdown" : undefined}
-                     aria-haspopup='true'
-                     aria-expanded={open ? "true" : undefined}
-                  />
-               </Tooltip>
-            </Box>
-         </Box>
-         <Box sx={{padding: 2}}>
-            {card?.listsAnswers.length > 0 ? (
-               card.listsAnswers.map((answer, index) => (
-                  <Typography key={index} sx={{mb: 1}}>
-                     <strong>{answer.userName}:</strong> {answer.descriptionAnswer}
-                  </Typography>
-               ))
-            ) : (
-               <Typography sx={{mb: 1, fontStyle: "italic", color: "gray"}}>Không có câu trả lời</Typography>
-            )}
-         </Box>
-         <Box
+            <Typography
+               variant='body2'
+               color='text.secondary'
+               sx={{
+                  color: themeMode.text.primary,
+               }}>
+               {<TextTruncate line={2} element='span' truncateText='…' text={card?.descriptionQuestion} />}
+            </Typography>
+         </CardContent>
+         <CardContent
             sx={{
-               padding: 2,
+               flex: "1 1 auto",
+               height: "128px",
                display: "flex",
-               alignItems: "center",
-               justifyContent: "space-between",
+               flexDirection: "column",
+               alignContent: "start",
+               padding: "2px 30px",
             }}>
-            <Button style={{backgroundColor: "#ffffff"}} startIcon={<AddCardIcon />}>
-               Thêm mới câu trả lời
+            {card?.listsAnswers && card?.listsAnswers.length > 0 ? (
+               card?.listsAnswers.map(
+                  (items, index) =>
+                     index < 2 && (
+                        <CardHeader
+                           key={index}
+                           sx={{
+                              padding: "5px",
+                              marginBottom: "7px",
+                              flex: "1 1 auto",
+                              borderRadius: "10px",
+                              backgroundColor: "rgba(255, 255, 255, .015)",
+                              ":hover": {
+                                 backgroundColor: themeMode.hover,
+                              },
+                           }}
+                           avatar={<QuickreplyIcon />}
+                           action={[
+                              <IconButton>
+                                 <ArrowOutwardIcon sx={{color: themeMode.text.title}} />
+                              </IconButton>,
+                           ]}
+                           title={<TextTruncate line={1} element='span' truncateText='…' text={card?.userName} />}
+                           subheader={
+                              <Typography>
+                                 <span style={{color: themeMode.text.title}}>Reply at</span> {card?.createdAt}{" "}
+                              </Typography>
+                           }
+                        />
+                     )
+               )
+            ) : (
+               <Typography
+                  variant='h6'
+                  component='div'
+                  sx={{
+                     color: themeMode.text.primary,
+                  }}>
+                  {<TextTruncate line={1} element='span' truncateText='…' text='No reply yet' />}
+               </Typography>
+            )}
+         </CardContent>
+         <CardActions disableSpacing>
+            <AvatarGroup total={24} sx={{float: "left", marginRight: "3px"}}>
+               <Avatar alt='Remy Sharp' src='/static/images/avatar/1.jpg' />
+               <Avatar alt='Travis Howard' src='/static/images/avatar/2.jpg' />
+            </AvatarGroup>
+            <Button size='small'>Show All</Button>
+            <div style={{flex: "1 1 auto"}}></div>
+            <IconButton>
+               <FavoriteBorderIcon
+                  sx={{
+                     color: "pink",
+                     ":hover": {
+                        color: "red",
+                     },
+                  }}
+               />
+            </IconButton>
+            <Typography
+               variant='body2'
+               color='text.secondary'
+               sx={{
+                  marginRight: "10px",
+                  color: themeMode.text.primary,
+               }}>
+               {card?.numberLikes}
+            </Typography>
+            <Button sx={{float: "right", borderRadius: "10px"}} startIcon={<ReplyIcon />}>
+               Reply
             </Button>
-            <Box sx={{display: "flex", alignItems: "center"}}>
-               {card?.numberLikes > 0 ? (
-                  <>
-                     <FavoriteIcon color='error' />
-                     <Typography sx={{ml: 0}}>{card?.numberLikes}</Typography>
-                  </>
-               ) : (
-                  <>
-                     <FavoriteIcon />
-                     <Typography sx={{ml: 0}}>{card?.numberLikes}</Typography>
-                  </>
-               )}
-            </Box>
-         </Box>
-      </Box>
+         </CardActions>
+      </Card>
    );
 }
 
