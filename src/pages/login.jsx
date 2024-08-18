@@ -9,9 +9,11 @@ import {
   IconButton,
   InputAdornment,
   Grid,
+  Checkbox,
+  FormControlLabel,
+  Divider,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Link } from "react-router-dom";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,6 +25,10 @@ function LoginPage() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const handleLoginGoogle = async () => {};
+  const handleLoginFacebook = async () => {};
+  const handleLoginTwitter = async () => {};
 
   return (
     <div
@@ -40,6 +46,7 @@ function LoginPage() {
           height: "600px",
           backgroundColor: "#b7e4c7",
           borderRadius: "30px",
+          color: "black",
         }}
       >
         <Grid container spacing={0} style={{ height: "100%" }}>
@@ -55,84 +62,193 @@ function LoginPage() {
             />
           </Grid>
           <Grid item xs={7}>
-            <CardHeader
-              title="Login Page"
-              titleTypographyProps={{
-                variant: "h5",
-                align: "center",
-                style: { color: "#1b4332" },
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                height: "100%",
               }}
-            />
-            <CardContent>
-              <form>
-                <div style={{ marginBottom: "20px" }}>
-                  <TextField
-                    label="User Name"
-                    name="username"
-                    fullWidth
-                    required
-                    variant="outlined"
-                    placeholder="Enter your username"
-                    sx={{
-                      "& label": { color: "#1b4332" },
-                    }}
-                    InputProps={{
-                      style: { backgroundColor: "#d8f3dc", color: "#1b4332" },
-                    }}
-                  />
-                </div>
+            >
+              <CardHeader
+                title="Login into account"
+                titleTypographyProps={{
+                  variant: "h5",
+                  align: "center",
+                  style: { color: "#1b4332" },
+                }}
+              />
+              <CardContent>
+                <form>
+                  <div style={{ marginBottom: "20px" }}>
+                    <TextField
+                      label="Email"
+                      name="email"
+                      fullWidth
+                      required
+                      variant="outlined"
+                      placeholder="Email Address"
+                      sx={{
+                        "& label": { color: "#1b4332" },
+                      }}
+                      InputProps={{
+                        style: {
+                          backgroundColor: "#d8f3dc",
+                          color: "#1b4332",
+                          borderRadius: "10px",
+                        },
+                      }}
+                    />
+                  </div>
 
-                <div style={{ marginBottom: "20px" }}>
-                  <TextField
-                    label="Password"
-                    name="password"
-                    fullWidth
-                    required
-                    variant="outlined"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    sx={{
-                      "& label": { color: "#1b4332" },
-                    }}
-                    InputProps={{
-                      style: { backgroundColor: "#d8f3dc", color: "#1b4332" },
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </div>
+                  <div style={{ marginBottom: "10px" }}>
+                    <TextField
+                      label="Password"
+                      name="password"
+                      fullWidth
+                      required
+                      variant="outlined"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Password"
+                      sx={{
+                        "& label": { color: "#1b4332" },
+                      }}
+                      InputProps={{
+                        style: {
+                          backgroundColor: "#d8f3dc",
+                          color: "#1b4332",
+                          borderRadius: "10px",
+                        },
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                            >
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </div>
 
-                <Typography variant="body2" align="right">
-                  <Link
-                    to="/forgot-password"
-                    style={{ textDecoration: "none", color: "#1b4332" }}
+                  <FormControlLabel
+                    control={<Checkbox color="primary" />}
+                    label="Remember me"
+                    style={{ marginBottom: "10px" }}
+                  />
+
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    style={{
+                      marginBottom: "10px",
+                      backgroundColor: "#40916c",
+                      color: "#fff",
+                      borderRadius: "10px",
+                      minHeight: "40px",
+                    }}
                   >
-                    Forgot Password?
-                  </Link>
-                </Typography>
+                    Login
+                  </Button>
 
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  style={{
-                    marginTop: "20px",
-                    backgroundColor: "#40916c",
-                    color: "#fff",
-                  }}
-                >
-                  Login
-                </Button>
-              </form>
-            </CardContent>
+                  <Typography
+                    variant="body2"
+                    align="right"
+                    style={{
+                      marginTop: "10px",
+                      fontSize: "16px",
+                    }}
+                  >
+                    <a
+                      href="/forgot-password"
+                      style={{ textDecoration: "none", color: "#007bff" }}
+                    >
+                      Forgot Password?
+                    </a>
+                  </Typography>
+
+                  <Typography
+                    variant="body2"
+                    align="center"
+                    style={{
+                      margin: "20px 0",
+                      fontSize: "18px",
+                    }}
+                  >
+                    or login with
+                  </Typography>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "20px",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      style={{
+                        backgroundColor: "#4267B2",
+                        color: "#fff",
+                        flex: 1,
+                        marginRight: "10px",
+                      }}
+                      onClick={handleLoginFacebook}
+                    >
+                      Facebook
+                    </Button>
+
+                    <Button
+                      variant="contained"
+                      style={{
+                        backgroundColor: "#DB4437",
+                        color: "#fff",
+                        flex: 1,
+                        marginRight: "10px",
+                      }}
+                      onClick={handleLoginGoogle}
+                    >
+                      Google
+                    </Button>
+
+                    <Button
+                      variant="contained"
+                      style={{
+                        backgroundColor: "#1DA1F2",
+                        color: "#fff",
+                        flex: 1,
+                      }}
+                      onClick={handleLoginTwitter}
+                    >
+                      Twitter
+                    </Button>
+                  </div>
+
+                  <Divider style={{ margin: "20px 0" }} />
+
+                  <Typography
+                    variant="body2"
+                    align="center"
+                    style={{ fontSize: "16px" }}
+                  >
+                    Don’t have an account?{" "}
+                    <a
+                      href="/register"
+                      style={{ textDecoration: "none", color: "#007bff" }}
+                    >
+                      Register here
+                    </a>
+                  </Typography>
+                </form>
+              </CardContent>{" "}
+            </div>
           </Grid>
         </Grid>
       </Card>
