@@ -1,10 +1,10 @@
 import React from "react";
 import "./styles/index.scss";
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import RouterPublic from "./routes/publicRoute.jsx";
 import Data from "./resources/data.js";
 import Header from "./layouts/header.jsx";
-
+import Footer from "./components/Footer/Footer.jsx";
 const App = () => {
    document.title = Data.title;
    return (
@@ -14,6 +14,7 @@ const App = () => {
             {/* Menu Option */}
             <RouterPublic />
             {/* Footer  */}
+            <Footer />
          </BrowserRouter>
       </>
    );
