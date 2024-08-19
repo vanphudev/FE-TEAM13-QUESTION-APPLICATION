@@ -3,16 +3,16 @@ import "./styles/index.scss";
 import {BrowserRouter} from "react-router-dom";
 import RouterPublic from "./routes/publicRoute.jsx";
 import Data from "./resources/data.js";
-import Home from "./pages/home.jsx";
+import Header from "./layouts/header.jsx";
 
 const App = () => {
    document.title = Data.title;
    return (
       <>
          <BrowserRouter>
-         <Header />
+            <Header />
             {/* Menu Option */}
-            <RouterPublic Home={Home} />
+            <RouterPublic />
             {/* Footer  */}
          </BrowserRouter>
       </>

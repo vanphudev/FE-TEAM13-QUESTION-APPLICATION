@@ -8,11 +8,13 @@ const Main = () => {
          <Box
             sx={{
                backgroundColor: (theme) =>
-                  theme.mode === "dark" ? theme.colorSchemes.dark.bg.secondary : theme.colorSchemes.light.bg.secondary,
+                  theme.mode === "dark" ? theme.colorSchemes.dark.bg.body : theme.colorSchemes.light.bg.secondary,
                width: "100%",
                overflow: "hidden",
                height: "max-content",
                padding: "10px",
+               paddingLeft: "50px",
+               paddingRight: "50px",
                margin: "0 auto",
             }}>
             <ListCardQuestion listQuestions={mockData?.listsQuestion} />
