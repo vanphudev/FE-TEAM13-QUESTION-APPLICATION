@@ -10,7 +10,7 @@ const App = () => {
    return (
       <>
          <BrowserRouter>
-            {/* Header */}
+         <Header />
             {/* Menu Option */}
             <RouterPublic Home={Home} />
             {/* Footer  */}
