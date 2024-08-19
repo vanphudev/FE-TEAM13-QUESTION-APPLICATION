@@ -25,7 +25,8 @@ const theme = extendTheme({
       },
       dark: {
          bg: {
-            primary: "#18181B",
+            body: "#232736",
+            primary: "#232736",
             secondary: "#1E1E1E",
             none: "transparent",
          },

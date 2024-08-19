@@ -1,0 +1,214 @@
+.header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 10px;
+   background-color: #292f42;
+   color: white;
+   top: 0px;
+   position: sticky; /* Đặt vị trí tương đối để căn chỉnh các phần tử con */
+   z-index: 1000; /* Đặt z-index cao để hiển thị phía trên các phần tử khác */
+   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.header_top_left {
+   display: flex;
+   align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+   font-size: 15px;
+   margin-right: auto; /* Đẩy phần tử này sang bên trái */
+   gap: 10px; /* Khoảng cách giữa các phần tử */
+}
+
+.header_top_left li {
+   display: flex;
+   align-items: center; /* Căn giữa các biểu tượng và chữ theo chiều dọc */
+}
+
+.header_top_left svg {
+   /* Cập nhật CSS cho các biểu tượng */
+   margin-right: 5px; /* Khoảng cách giữa biểu tượng và chữ */
+}
+
+.logo11 {
+   display: flex;
+   align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+   font-size: 35px;
+   margin-right: auto; /* Đẩy phần tử này sang bên trái */
+   gap: 10px; /* Khoảng cách giữa các phần tử */
+}
+
+.header-center {
+   font-family: "Edu VIC WA NT Beginner", cursive;
+   flex: 1; /* Chiếm không gian còn lại */
+   display: flex;
+   flex-wrap: nowrap;
+   text-align: center;
+   justify-content: center; /* Căn giữa logo */
+   align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.logo {
+   width: auto;
+   object-fit: contain;
+   padding: 5px;
+   margin-left: -20px;
+}
+
+.searchheader {
+   display: flex;
+   align-items: center;
+   margin-left: 20px;
+}
+
+.search-bar {
+   padding: 10px;
+   margin-right: 10px;
+   border: none;
+   border-radius: 5px;
+}
+
+.header-right {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+}
+
+.header-right ul {
+   display: flex;
+   column-gap: 10px;
+   list-style: none;
+   margin: 0;
+   padding: 0;
+}
+
+.header-right li {
+   display: flex;
+   align-items: center;
+}
+
+.header-right a {
+   font-size: 25px;
+   color: white;
+   display: flex;
+   align-items: center;
+   text-decoration: none;
+   padding: 0px;
+}
+
+.login {
+   display: flex;
+   align-items: center;
+}
+
+.logout-btn {
+   padding: 10px 20px;
+   border: none;
+   background-color: #555;
+   color: white;
+   cursor: pointer;
+   font-size: 16px;
+   border-radius: 10px;
+}
+
+.login-btn {
+   margin-right: 10px;
+   padding: 10px 20px;
+   border: none;
+   background-color: #7f889f;
+   color: white;
+   cursor: pointer;
+   border-radius: 5px;
+}
+
+.login-btn:hover,
+.logout-btn:hover {
+   background-color: #7f889f;
+}
+
+/* Media Query cho Tablet */
+@media (max-width: 1024px) {
+   .logo {
+      width: 90%;
+   }
+
+   .search-bar {
+      width: 150px;
+   }
+
+   .header-right ul {
+      column-gap: 8px;
+   }
+
+   .logo11 {
+      font-size: 29px;
+   }
+}
+
+/* Media Query cho Mobile */
+@media (max-width: 768px) {
+   .header {
+      flex-direction: column;
+      justify-content: center;
+   }
+
+   .header_top_left {
+      font-size: 14px;
+      margin-bottom: 10px;
+      margin-right: 0; /* Đưa phần tử này về phía bên trái */
+   }
+
+   .header-center {
+      display: none;
+   }
+
+   .header_top_left {
+      flex-wrap: nowrap;
+      justify-content: center;
+   }
+
+   .logo {
+      object-fit: contain;
+      margin-left: 0;
+   }
+
+   .searchheader {
+      margin-right: 0px;
+      margin-left: 0;
+      margin-top: 5px;
+      margin-bottom: 20px;
+      width: 60%;
+   }
+
+   .search-bar {
+      width: 100%;
+   }
+
+   .header-right {
+      flex-direction: column;
+      align-items: flex-start;
+   }
+
+   .login {
+      gap: 20px;
+   }
+
+   .logo11 {
+      font-size: 18px;
+   }
+}
+
+.searchheader {
+   display: flex;
+   align-items: center;
+   margin-left: 20px;
+   position: relative;
+}
+
+.search-icon {
+   font-size: 24px;
+   color: rgb(22, 9, 9);
+   cursor: pointer;
+   position: absolute;
+   right: 10px;
+   font-size: 30px;
+}

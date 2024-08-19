@@ -2,25 +2,41 @@ import Box from "@mui/material/Box";
 import CardQuestion from "./cardQuestion";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import useWindowSize from "../../utils/useWindowSize";
+
+function caculateWidth(windowSize) {
+   if (windowSize > 2050) {
+      return {size: 5, width: 2050};
+   } else if (windowSize > 1650) {
+      return {size: 4, width: 1650};
+   } else if (windowSize > 1250) {
+      return {size: 3, width: 1250};
+   } else if (windowSize > 850) {
+      return {size: 2, width: 850};
+   } else {
+      return {size: 1, width: 450};
+   }
+}
 
 function ListCard({listQuestions}) {
+   const countColum = caculateWidth(useWindowSize().width);
    return (
-      <Box sx={{width: "100%", margin: "0 auto", height: "85vh", position: "relative"}}>
+      <Box sx={{width: "100%", margin: "0 auto"}}>
          {listQuestions && listQuestions.length > 0 ? (
             <Box
                sx={{
                   backgroundColor: "inherit",
-                  width: "100%",
-                  height: "calc(100% - 50px)",
+                  width: countColum.width - 10 + "px",
+                  margin: "0 auto",
                   display: "flex",
                   overflowY: "auto",
                   flexWrap: "wrap",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   gap: "10px",
                   "&::-webkit-scrollbar-track": {margin: 2},
                }}>
                {listQuestions?.map((items, index) => (
-                  <CardQuestion key={index} card={items} />
+                  <CardQuestion size={countColum} key={index} card={items} />
                ))}
             </Box>
          ) : (
@@ -35,7 +51,7 @@ function ListCard({listQuestions}) {
                <h1>There are no questions</h1>
             </Box>
          )}
-         <Box sx={{margin: "10px", position: "absolute", bottom: "0px", left: "50%", transform: "translateX(-50%)"}}>
+         <Box sx={{margin: "20px"}}>
             <Stack spacing={2}>
                <Pagination count={10} variant='outlined' shape='rounded' size='large' />
             </Stack>
