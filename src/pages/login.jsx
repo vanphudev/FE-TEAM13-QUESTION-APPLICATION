@@ -80,22 +80,22 @@ function LoginPage() {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        backgroundColor: "#f0fff1",
+        backgroundColor: "#33415c",
       }}
     >
       <Card
         style={{
           width: "1000px",
           height: "600px",
-          backgroundColor: "#b7e4c7",
+          backgroundColor: "#292F42",
           borderRadius: "30px",
-          color: "black",
+          // color: "black",
         }}
       >
         <Grid container spacing={0} style={{ height: "100%" }}>
           <Grid item xs={5}>
             <img
-              src="https://plus.unsplash.com/premium_photo-1679870686665-a1b0b6ca56a9?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src="https://images.unsplash.com/photo-1665789318391-6057c533005e?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="Login Illustration"
               style={{
                 width: "100%",
@@ -116,9 +116,10 @@ function LoginPage() {
               <CardHeader
                 title="Login into account"
                 titleTypographyProps={{
-                  variant: "h5",
+                  variant: "overline",
                   align: "center",
-                  style: { color: "#1b4332" },
+                  // style: { color: "#1b4332" },
+                  fontSize: "3vh",
                 }}
               />
               <CardContent>
@@ -130,13 +131,14 @@ function LoginPage() {
                       fullWidth
                       variant="outlined"
                       placeholder="Email Address"
-                      sx={{
-                        "& label": { color: "#1b4332" },
-                      }}
+                      // sx={{
+                      //   "& label": { color: "#1b4332" },
+                      // }}
                       InputProps={{
                         style: {
-                          backgroundColor: "#d8f3dc",
-                          color: "#1b4332",
+                          // backgroundColor: "#7F889F",
+                          backgroundColor: "#778da9",
+                          // color: "#1b4332",
                           borderRadius: "10px",
                         },
                       }}
@@ -153,13 +155,13 @@ function LoginPage() {
                       variant="outlined"
                       type={showPassword ? "text" : "password"}
                       placeholder="Password"
-                      sx={{
-                        "& label": { color: "#1b4332" },
-                      }}
+                      // sx={{
+                      //   "& label": { color: "#1b4332" },
+                      // }}
                       InputProps={{
                         style: {
-                          backgroundColor: "#d8f3dc",
-                          color: "#1b4332",
+                          backgroundColor: "#778da9",
+                          // color: "white",
                           borderRadius: "10px",
                         },
                         endAdornment: (
@@ -194,7 +196,7 @@ function LoginPage() {
                     fullWidth
                     style={{
                       marginBottom: "10px",
-                      backgroundColor: "#40916c",
+                      backgroundColor: "#1b263b",
                       color: "#fff",
                       borderRadius: "10px",
                       minHeight: "40px",
@@ -220,11 +222,13 @@ function LoginPage() {
                   </Typography>
 
                   <Typography
-                    variant="body2"
-                    align="center"
+                    variant="overline"
+                    // align="center"
+                    display="flex"
+                    justifyContent="center"
                     style={{
-                      margin: "20px 0",
-                      fontSize: "18px",
+                      margin: "10px 0",
+                      fontSize: "10px",
                     }}
                   >
                     or login with
