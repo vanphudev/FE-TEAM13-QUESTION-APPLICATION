@@ -5,6 +5,7 @@ import RouterPublic from "./routes/publicRoute.jsx";
 import Data from "./resources/data.js";
 import Header from "./layouts/header.jsx";
 import { SnackbarProvider } from "notistack";
+import Footer from "./components/Footer/Footer.jsx";
 
 const App = () => {
   document.title = Data.title;
@@ -14,9 +15,10 @@ const App = () => {
         <Header />
         {/* Menu Option */}
         <RouterPublic />
-        {/* Footer  */}
+          <Footer />
       </BrowserRouter>
     </SnackbarProvider>
   );
 };
+
 export default App;
