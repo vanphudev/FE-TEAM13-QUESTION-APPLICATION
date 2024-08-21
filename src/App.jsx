@@ -7,6 +7,7 @@ import Header from "./layouts/header.jsx";
 import {SnackbarProvider} from "notistack";
 import Footer from "./layouts/footer.jsx";
 
+
 const App = () => {
    document.title = Data.title;
    return (

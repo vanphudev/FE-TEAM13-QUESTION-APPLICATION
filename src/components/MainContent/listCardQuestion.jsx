@@ -18,7 +18,7 @@ function caculateWidth(windowSize) {
    }
 }
 
-function ListCard({listQuestions}) {
+function ListCard({listQuestions, setListQuestions}) {
    const countColum = caculateWidth(useWindowSize().width);
    return (
       <Box sx={{width: "100%", margin: "0 auto"}}>
@@ -36,7 +36,7 @@ function ListCard({listQuestions}) {
                   "&::-webkit-scrollbar-track": {margin: 2},
                }}>
                {listQuestions?.map((items, index) => (
-                  <CardQuestion size={countColum} key={index} card={items} />
+                  <CardQuestion size={countColum} key={index} card={items} setListQuestions={setListQuestions} />
                ))}
             </Box>
          ) : (

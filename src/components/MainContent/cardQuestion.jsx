@@ -23,14 +23,17 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import {formatDateString, isValidDate} from "../../utils/func";
+import axiosInstance from "../../apis";
+import {useSnackbar} from "notistack";
 
-const CardQuestion = ({card, size}) => {
+const CardQuestion = ({card, size, setListQuestions}) => {
    const widthCard = size.width / size.size;
    const widthCard_new = widthCard - 10;
    const [openDelete, setOpenDelete] = React.useState(false);
    const [openEdit, setOpenEdit] = React.useState(false);
    const [openReply, setOpenReply] = React.useState(false);
-
+   const {enqueueSnackbar} = useSnackbar();
    const handleClickOpenReply = () => {
       setOpenReply(true);
    };
@@ -54,9 +57,24 @@ const CardQuestion = ({card, size}) => {
    const handleCloseDelete = () => {
       setOpenDelete(false);
    };
+
+   const handleDelete = async (itemId) => {
+      try {
+         const response = await axiosInstance.delete(`/questions/delete/${itemId}`);
+         if (response.status === 200) {
+            enqueueSnackbar("Delete item successfully", itemId, {variant: "success"});
+            setListQuestions((prev) => prev.filter((item) => item.question_id !== itemId));
+         }
+      } catch (error) {
+         enqueueSnackbar("Delete item failed", {variant: "error"});
+      }
+      setOpenDelete(false);
+   };
+
    const [themeMode, setThemeMode] = React.useState(
       useTheme().mode === "light" ? useTheme().colorSchemes.light : useTheme().colorSchemes.dark
    );
+
    return (
       <>
          <React.Fragment>
@@ -85,10 +103,10 @@ const CardQuestion = ({card, size}) => {
                onClose={handleCloseEdit}
                aria-labelledby='alert-dialog-title'
                aria-describedby='alert-dialog-description'>
-               <DialogTitle id='alert-dialog-title'>Cập nhật nội dung {card?.titleQuestion}</DialogTitle>
+               <DialogTitle id='alert-dialog-title'>Cập nhật nội dung {card?.question_title}</DialogTitle>
                <DialogContent>
                   <DialogContentText id='alert-dialog-description'>
-                     Nội dung câu hỏi: {card?.titleQuestion}
+                     Nội dung câu hỏi: {card?.question_description}
                   </DialogContentText>
                </DialogContent>
                <DialogActions>
@@ -108,12 +126,12 @@ const CardQuestion = ({card, size}) => {
                <DialogTitle id='alert-dialog-title'>Bạn có chắc chắn muốn xóa câu hỏi này không?</DialogTitle>
                <DialogContent>
                   <DialogContentText id='alert-dialog-description'>
-                     Nội dung câu hỏi: {card?.titleQuestion}
+                     Nội dung câu hỏi: {card?.question_description}
                   </DialogContentText>
                </DialogContent>
                <DialogActions>
                   <Button onClick={handleCloseDelete}>Disagree</Button>
-                  <Button onClick={handleCloseDelete} autoFocus sx={{color: "red"}}>
+                  <Button onClick={() => handleDelete(card?.question_id)} sx={{color: "red"}}>
                      Agree
                   </Button>
                </DialogActions>
@@ -123,7 +141,7 @@ const CardQuestion = ({card, size}) => {
             sx={{
                width: widthCard_new,
                height: "max-content",
-               backgroundColor: themeMode.bg.primary,
+               backgroundColor: card?.isQuestionByAdmin ? "#202433" : "rgba(255, 255, 255, .05)",
                webkitBackdropFilter: "blur(15px)",
                backdropFilter: "blur(2px)",
                borderRadius: "10px",
@@ -143,12 +161,12 @@ const CardQuestion = ({card, size}) => {
                      <IconButton onClick={handleClickOpenEdit}>
                         <ModeEditIcon sx={{color: "green"}} />
                      </IconButton>
-                     <IconButton onClick={handleClickOpenDelete}>
+                     <IconButton onClick={() => handleClickOpenDelete(card?.question_id)}>
                         <DeleteOutlineIcon sx={{color: "red"}} />
                      </IconButton>
                   </>,
                ]}
-               title={<TextTruncate line={1} element='span' truncateText='…' text={card?.userName} />}
+               title={<TextTruncate line={1} element='span' truncateText='…' text={card?.asker.user_name} />}
                subheader={
                   <Typography>
                      <span
@@ -156,15 +174,15 @@ const CardQuestion = ({card, size}) => {
                            color: themeMode.text.title,
                         }}>
                         Question at
-                     </span>
-                     {card?.createdAt}
+                     </span>{" "}
+                     {formatDateString(card?.created_at)}
                   </Typography>
                }
             />
             <CardContent
                sx={{
-                  padding: "0px 18px",
-                  height: "80px",
+                  padding: "0px 10px",
+                  height: "88px",
                   color: themeMode.text.primary,
                }}>
                <Typography
@@ -173,7 +191,7 @@ const CardQuestion = ({card, size}) => {
                   sx={{
                      color: themeMode.text.title,
                   }}>
-                  {<TextTruncate line={1} element='span' truncateText='…' text={card?.titleQuestion} />}
+                  {<TextTruncate line={1} element='span' truncateText='…' text={card?.question_title} />}
                </Typography>
                <Typography
                   variant='body2'
@@ -181,28 +199,26 @@ const CardQuestion = ({card, size}) => {
                   sx={{
                      color: themeMode.text.primary,
                   }}>
-                  {<TextTruncate line={2} element='span' truncateText='…' text={card?.descriptionQuestion} />}
+                  {<TextTruncate line={1} element='span' truncateText='…' text={card?.question_description} />}
                </Typography>
             </CardContent>
             <CardContent
                sx={{
-                  flex: "1 1 auto",
                   height: "128px",
                   display: "flex",
                   flexDirection: "column",
                   alignContent: "start",
                   padding: "2px 30px",
                }}>
-               {card?.listsAnswers && card?.listsAnswers.length > 0 ? (
-                  card.listsAnswers.map(
+               {card?.Answers && card?.Answers.length > 0 ? (
+                  card.Answers.map(
                      (item, index) =>
                         index < 2 && (
                            <CardHeader
-                              key={item.id || index} // Sử dụng `item.id` nếu có, nếu không có thì dùng `index`
+                              key={item.answer_id || index} // Sử dụng `item.id` nếu có, nếu không có thì dùng `index`
                               sx={{
                                  padding: "5px",
                                  marginBottom: "7px",
-                                 flex: "1 1 auto",
                                  borderRadius: "10px",
                                  backgroundColor: "rgba(255, 255, 255, .015)",
                                  ":hover": {
@@ -215,25 +231,27 @@ const CardQuestion = ({card, size}) => {
                                     <ArrowOutwardIcon sx={{color: themeMode.text.title}} />
                                  </IconButton>
                               }
-                              title={<TextTruncate line={1} element='span' truncateText='…' text={card?.userName} />}
+                              title={
+                                 <TextTruncate line={1} element='span' truncateText='…' text={item?.User?.user_name} />
+                              }
                               subheader={
                                  <Typography>
-                                    <span style={{color: themeMode.text.title}}>Reply at</span> {card?.createdAt}
+                                    <span style={{color: themeMode.text.title}}>Reply at </span>{" "}
+                                    {formatDateString(card?.createdAt)}
                                  </Typography>
                               }
                            />
                         )
                   )
                ) : (
-                  <Typography variant='h6' component='div' sx={{color: themeMode.text.primary}}>
+                  <Typography variant='h6' component='div' sx={{color: "red", textAlign: "center"}}>
                      <TextTruncate line={1} element='span' truncateText='…' text='No reply yet' />
                   </Typography>
                )}
             </CardContent>
             <CardActions disableSpacing>
-               <AvatarGroup total={24} sx={{float: "left", marginRight: "3px"}}>
+               <AvatarGroup total={card?.answerers.length} sx={{float: "left", marginRight: "3px"}}>
                   <Avatar alt='Remy Sharp' src='/static/images/avatar/1.jpg' />
-                  <Avatar alt='Travis Howard' src='/static/images/avatar/2.jpg' />
                </AvatarGroup>
                <Button size='small'>Show All</Button>
                <div style={{flex: "1 1 auto"}}></div>

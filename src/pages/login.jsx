@@ -15,9 +15,12 @@ import {
 } from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {useSnackbar} from "notistack";
+import Cookies from "js-cookie";
 import validator from "validator";
-
+import axiosInstance from "../apis";
+import {useNavigate} from "react-router-dom";
 function LoginPage() {
+   const navigate = useNavigate();
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [showPassword, setShowPassword] = useState(false);
@@ -37,42 +40,34 @@ function LoginPage() {
 
    const handleLogin = async (event) => {
       event.preventDefault();
-
       if (!email || !password) {
-         enqueueSnackbar("Email and password is required!", {
-            variant: "error",
-         });
+         enqueueSnackbar("Email and password are required!", {variant: "error"});
          return;
       }
-
-      if (validator.isEmail(email)) {
+      if (!validator.isEmail(email)) {
          enqueueSnackbar("Email is not in correct format!", {variant: "error"});
          return;
       }
-
-      if (password.length < 6) {
-         enqueueSnackbar("Password must be at least 6 characters!", {
-            variant: "error",
-         });
+      if (password.length < 4) {
+         enqueueSnackbar("Password must be at least 4 characters long!", {variant: "error"});
          return;
       }
-
       try {
-         //call api
-         if (response.ok) {
+         const response = await axiosInstance.post("/users/login", {email, password});
+         if (response.status === 200) {
+            const {accessToken, refreshToken, user} = response.data;
+            Cookies.set("accessToken", accessToken, {expires: 1});
+            Cookies.set("refreshToken", refreshToken, {expires: 100});
+            Cookies.set("user", JSON.stringify(user), {expires: 100});
             enqueueSnackbar("Login successful!", {variant: "success"});
+            return navigate("/");
          } else {
-            enqueueSnackbar("Incorrect email or password!!", {
-               variant: "error",
-            });
+            enqueueSnackbar("Incorrect email or password!", {variant: "error"});
          }
       } catch (error) {
-         enqueueSnackbar("Connection error! Please try again.", {
-            variant: "error",
-         });
+         enqueueSnackbar("Connection error! Please try again." + error, {variant: "error"});
       }
    };
-
    return (
       <div
          style={{
@@ -128,14 +123,9 @@ function LoginPage() {
                                  fullWidth
                                  variant='outlined'
                                  placeholder='Email Address'
-                                 // sx={{
-                                 //   "& label": { color: "#1b4332" },
-                                 // }}
                                  InputProps={{
                                     style: {
-                                       // backgroundColor: "#7F889F",
                                        backgroundColor: "#778da9",
-                                       // color: "#1b4332",
                                        borderRadius: "10px",
                                     },
                                  }}
@@ -152,13 +142,9 @@ function LoginPage() {
                                  variant='outlined'
                                  type={showPassword ? "text" : "password"}
                                  placeholder='Password'
-                                 // sx={{
-                                 //   "& label": { color: "#1b4332" },
-                                 // }}
                                  InputProps={{
                                     style: {
                                        backgroundColor: "#778da9",
-                                       // color: "white",
                                        borderRadius: "10px",
                                     },
                                     endAdornment: (

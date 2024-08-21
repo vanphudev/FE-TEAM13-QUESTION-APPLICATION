@@ -11,19 +11,29 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import {Settings, Logout} from "@mui/icons-material";
+import {Logout} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import {red} from "@mui/material/colors";
 import {useNavigate} from "react-router-dom";
 import {Link} from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Header = () => {
    const navigate = useNavigate();
    const [anchorEl, setAnchorEl] = React.useState(null);
    const open = Boolean(anchorEl);
+   const refreshToken = Cookies.get("refreshToken");
+   const accessToken = Cookies.get("accessToken");
+   const userCookie = Cookies.get("user");
+   const user = userCookie ? JSON.parse(userCookie) : null;
 
    const handlerLogin = () => {
-      // Điều hướng đến trang login
+      const refreshToken = Cookies.get("refreshToken");
+      const accessToken = Cookies.get("accessToken");
+      if (refreshToken && accessToken) {
+         navigate("/");
+         return;
+      }
       navigate("/login");
    };
 
@@ -38,6 +48,7 @@ const Header = () => {
    const [modalOpen, setModalOpen] = useState(false);
    const handleOpen = () => setModalOpen(true);
    const handleClose = () => setModalOpen(false);
+
    return (
       <header className='header'>
          <div className='header_top_left'>
@@ -51,21 +62,18 @@ const Header = () => {
             </ul>
          </div>
          <div className='searchheader'>
-            <input
-               type='text'
-               placeholder='Search...'
-               className='search-bar'
-               onClick={handleOpen} // Mở Modal khi nhấn vào thanh tìm kiếm
-            />
+            <input type='text' placeholder='Search...' className='search-bar' onClick={handleOpen} />
             <AiOutlineSearch className='search-icon' onClick={handleOpen} /> {/* Thêm biểu tượng kính lúp */}
          </div>
          <div className='header-right'>
             <ul>
                <li>
                   <div className='login'>
-                     <button onClick={handlerLogin} className='login-btn'>
-                        Login
-                     </button>
+                     {(!refreshToken || !accessToken) && (
+                        <button onClick={handlerLogin} className='login-btn'>
+                           Login
+                        </button>
+                     )}
                      <Stack direction='row' spacing={2}>
                         <Tooltip>
                            <>
@@ -93,15 +101,9 @@ const Header = () => {
                                  }}>
                                  <MenuItem>
                                     <Avatar sx={{width: 28, height: 28, mr: 2}} />
-                                    Hi, Nguyễn Văn Phú
+                                    Hi, {user?.user_name}
                                  </MenuItem>
                                  <Divider />
-                                 <MenuItem>
-                                    <ListItemIcon>
-                                       <Settings fontSize='small' />
-                                    </ListItemIcon>
-                                    Settings
-                                 </MenuItem>
                                  <MenuItem>
                                     <ListItemIcon>
                                        <Logout fontSize='small' />
@@ -113,14 +115,13 @@ const Header = () => {
                         </Tooltip>
                      </Stack>
                      <Typography sx={{marginLeft: "10px"}}>
-                        <span style={{color: "white"}}>Hi, </span>
-                        <span style={{color: "white", fontWeight: "bold"}}>Admin</span>
+                        <span style={{color: "white", fontWeight: "bold"}}>Hi, </span>
+                        <span style={{color: "white", fontWeight: "bold"}}>{user?.user_name}</span>
                      </Typography>
                   </div>
                </li>
             </ul>
          </div>
-         {/* Thêm component SearchModal */}
          <SearchModal open={modalOpen} handleClose={handleClose} />
       </header>
    );
