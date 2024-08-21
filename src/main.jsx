@@ -6,9 +6,7 @@ import App from "./App.jsx";
 import "./styles/index.scss";
 
 createRoot(document.getElementById("__next")).render(
-   <StrictMode>
-      <CssVarsProvider theme={theme} defaultMode='dark'>
-         <App />
-      </CssVarsProvider>
-   </StrictMode>
+   <CssVarsProvider theme={theme} defaultMode='dark'>
+      <App />
+   </CssVarsProvider>
 );

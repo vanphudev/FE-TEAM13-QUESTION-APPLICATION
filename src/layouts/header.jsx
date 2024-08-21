@@ -67,46 +67,49 @@ const Header = () => {
                         Login
                      </button>
                      <Stack direction='row' spacing={2}>
-                        <Tooltip title='Account settings'>
-                           <IconButton
-                              onClick={handleClick}
-                              size='small'
-                              sx={{padding: 0}}
-                              aria-controls={open ? "basic-menu-profiles" : undefined}
-                              aria-haspopup='true'
-                              aria-expanded={open ? "true" : undefined}>
-                              <Avatar
-                                 sx={{width: 44, height: 44, bgcolor: red[500]}}
-                                 alt='Profile Picture'
-                                 src='https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/275253747_1072102423713589_4612179048140960110_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFXLmledEki0IJrIZG56lUYLlgfC2oNXtAuWB8Lag1e0BhIdURdF0Zv82HzYLgFvxkhgEvpEyBM9xONwlzGv4Bt&_nc_ohc=0DftG3g4P1cQ7kNvgEMKrQf&_nc_ht=scontent.fsgn5-10.fna&gid=Aa1Pn0UNWd6eVdf26MOitd0&oh=00_AYCCztGFbKHBdYH1-dF1rcINGqrAMjYA_JCKD4mFuBhdGw&oe=668CCA96'
-                              />
-                           </IconButton>
-                           <Menu
-                              id='basic-menu-profiles'
-                              anchorEl={anchorEl}
-                              open={open}
-                              onClose={handleCloseMenu}
-                              MenuListProps={{
-                                 "aria-labelledby": "basic-button-profiles",
-                              }}>
-                              <MenuItem>
-                                 <Avatar sx={{width: 28, height: 28, mr: 2}} />
-                                 Hi, Nguyễn Văn Phú
-                              </MenuItem>
-                              <Divider />
-                              <MenuItem>
-                                 <ListItemIcon>
-                                    <Settings fontSize='small' />
-                                 </ListItemIcon>
-                                 Settings
-                              </MenuItem>
-                              <MenuItem>
-                                 <ListItemIcon>
-                                    <Logout fontSize='small' />
-                                 </ListItemIcon>
-                                 Logout
-                              </MenuItem>
-                           </Menu>
+                        <Tooltip>
+                           <>
+                              {" "}
+                              <IconButton
+                                 onClick={handleClick}
+                                 size='small'
+                                 sx={{padding: 0}}
+                                 aria-controls={open ? "basic-menu-profiles" : undefined}
+                                 aria-haspopup='true'
+                                 aria-expanded={open ? "true" : undefined}>
+                                 <Avatar
+                                    sx={{width: 44, height: 44, bgcolor: red[500]}}
+                                    alt='Profile Picture'
+                                    src='https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/275253747_1072102423713589_4612179048140960110_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFXLmledEki0IJrIZG56lUYLlgfC2oNXtAuWB8Lag1e0BhIdURdF0Zv82HzYLgFvxkhgEvpEyBM9xONwlzGv4Bt&_nc_ohc=0DftG3g4P1cQ7kNvgEMKrQf&_nc_ht=scontent.fsgn5-10.fna&gid=Aa1Pn0UNWd6eVdf26MOitd0&oh=00_AYCCztGFbKHBdYH1-dF1rcINGqrAMjYA_JCKD4mFuBhdGw&oe=668CCA96'
+                                 />
+                              </IconButton>
+                              <Menu
+                                 id='basic-menu-profiles'
+                                 anchorEl={anchorEl}
+                                 open={open}
+                                 onClose={handleCloseMenu}
+                                 MenuListProps={{
+                                    "aria-labelledby": "basic-button-profiles",
+                                 }}>
+                                 <MenuItem>
+                                    <Avatar sx={{width: 28, height: 28, mr: 2}} />
+                                    Hi, Nguyễn Văn Phú
+                                 </MenuItem>
+                                 <Divider />
+                                 <MenuItem>
+                                    <ListItemIcon>
+                                       <Settings fontSize='small' />
+                                    </ListItemIcon>
+                                    Settings
+                                 </MenuItem>
+                                 <MenuItem>
+                                    <ListItemIcon>
+                                       <Logout fontSize='small' />
+                                    </ListItemIcon>
+                                    Logout
+                                 </MenuItem>
+                              </Menu>
+                           </>
                         </Tooltip>
                      </Stack>
                      <Typography sx={{marginLeft: "10px"}}>

@@ -24,7 +24,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-function CardQuestion({card, size}) {
+const CardQuestion = ({card, size}) => {
    const widthCard = size.width / size.size;
    const widthCard_new = widthCard - 10;
    const [openDelete, setOpenDelete] = React.useState(false);
@@ -136,23 +136,17 @@ function CardQuestion({card, size}) {
                cursor: "pointer",
             }}>
             <CardHeader
-               sx={{
-                  padding: "10px",
-               }}
-               avatar={
-                  <Avatar sx={{bgcolor: red[500]}} aria-label='recipe'>
-                     R
-                  </Avatar>
-               }
+               sx={{padding: "10px"}}
+               avatar={<Avatar sx={{bgcolor: red[500]}}>R</Avatar>}
                action={[
-                  <React.Fragment>
-                     <IconButton>
-                        <ModeEditIcon sx={{color: "green"}} onClick={handleClickOpenEdit} />
+                  <>
+                     <IconButton onClick={handleClickOpenEdit}>
+                        <ModeEditIcon sx={{color: "green"}} />
                      </IconButton>
-                     <IconButton>
-                        <DeleteOutlineIcon sx={{color: "red"}} onClick={handleClickOpenDelete} />
+                     <IconButton onClick={handleClickOpenDelete}>
+                        <DeleteOutlineIcon sx={{color: "red"}} />
                      </IconButton>
-                  </React.Fragment>,
+                  </>,
                ]}
                title={<TextTruncate line={1} element='span' truncateText='…' text={card?.userName} />}
                subheader={
@@ -162,8 +156,8 @@ function CardQuestion({card, size}) {
                            color: themeMode.text.title,
                         }}>
                         Question at
-                     </span>{" "}
-                     {card?.createdAt}{" "}
+                     </span>
+                     {card?.createdAt}
                   </Typography>
                }
             />
@@ -200,11 +194,11 @@ function CardQuestion({card, size}) {
                   padding: "2px 30px",
                }}>
                {card?.listsAnswers && card?.listsAnswers.length > 0 ? (
-                  card?.listsAnswers.map(
-                     (items, index) =>
+                  card.listsAnswers.map(
+                     (item, index) =>
                         index < 2 && (
                            <CardHeader
-                              key={index}
+                              key={item.id || index} // Sử dụng `item.id` nếu có, nếu không có thì dùng `index`
                               sx={{
                                  padding: "5px",
                                  marginBottom: "7px",
@@ -216,28 +210,23 @@ function CardQuestion({card, size}) {
                                  },
                               }}
                               avatar={<QuickreplyIcon />}
-                              action={[
+                              action={
                                  <IconButton>
                                     <ArrowOutwardIcon sx={{color: themeMode.text.title}} />
-                                 </IconButton>,
-                              ]}
+                                 </IconButton>
+                              }
                               title={<TextTruncate line={1} element='span' truncateText='…' text={card?.userName} />}
                               subheader={
                                  <Typography>
-                                    <span style={{color: themeMode.text.title}}>Reply at</span> {card?.createdAt}{" "}
+                                    <span style={{color: themeMode.text.title}}>Reply at</span> {card?.createdAt}
                                  </Typography>
                               }
                            />
                         )
                   )
                ) : (
-                  <Typography
-                     variant='h6'
-                     component='div'
-                     sx={{
-                        color: themeMode.text.primary,
-                     }}>
-                     {<TextTruncate line={1} element='span' truncateText='…' text='No reply yet' />}
+                  <Typography variant='h6' component='div' sx={{color: themeMode.text.primary}}>
+                     <TextTruncate line={1} element='span' truncateText='…' text='No reply yet' />
                   </Typography>
                )}
             </CardContent>
@@ -277,6 +266,6 @@ function CardQuestion({card, size}) {
          </Card>
       </>
    );
-}
+};
 
 export default CardQuestion;
