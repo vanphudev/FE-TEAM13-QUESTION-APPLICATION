@@ -20,7 +20,7 @@ import Input from "@mui/material/Input";
 import ReactQuill from "react-quill";
 import axiosInstance from "../../apis";
 import "react-quill/dist/quill.snow.css";
-
+import dayjs from "dayjs";
 import {ToastContainer, toast, Bounce} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -37,6 +37,10 @@ const style = {
 };
 
 function ResponsiveAppBar() {
+   const [valueDate, setValueDate] = useState({
+      startDate: dayjs(),
+      endDate: dayjs(),
+   });
    const [value, setValue] = useState({title: "", body: ""});
    const [open, setOpen] = React.useState(false);
    const handleOpen = () => setOpen(true);
@@ -45,6 +49,81 @@ function ResponsiveAppBar() {
    const handleChange = (e) => {
       const {name, value} = e.target;
       setValue((prevValue) => ({...prevValue, [name]: value}));
+   };
+
+   const handleDateChange = (newValue, fieldName) => {
+      setValueDate((prevValue) => ({
+         ...prevValue,
+         [fieldName]: newValue, // Cập nhật giá trị startDate hoặc endDate
+      }));
+   };
+   const filterQuetion = async () => {
+      if (valueDate.startDate === "" || valueDate.endDate === "") {
+         const notify = () =>
+            toast.warn("Vui lòng điền đầy đủ thông tin ngày bắt đầu và ngày kết thúc !", {
+               position: "top-right",
+               autoClose: 5000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+               theme: "dark",
+               transition: Bounce,
+            });
+         notify();
+         return;
+      }
+      if (new Date(valueDate.startDate) > new Date(valueDate.endDate)) {
+         const notify = () =>
+            toast.warn("Ngày bắt đầu không được lớn hơn ngày kết thúc !", {
+               position: "top-right",
+               autoClose: 5000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+               theme: "dark",
+               transition: Bounce,
+            });
+         notify();
+         return;
+      }
+      try {
+         const response = await axiosInstance.get("/questions/filter-by-date", {
+            params: {startDate: valueDate.startDate, endDate: valueDate.endDate},
+         });
+         if (response.status === 200 || response.status === 201) {
+            const notify = () =>
+               toast.success("Lọc câu hỏi thành công !", {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "dark",
+                  transition: Bounce,
+               });
+            notify();
+         }
+      } catch (error) {
+         const notify = () =>
+            toast.error("Lọc câu hỏi thất bại !" + error, {
+               position: "top-right",
+               autoClose: 5000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+               theme: "dark",
+               transition: Bounce,
+            });
+         notify();
+      }
    };
 
    // Handle ReactQuill change
@@ -155,21 +234,23 @@ function ResponsiveAppBar() {
                      <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                            label='Ngày bắt đầu'
-                           value={null}
-                           onChange={() => {}}
+                           value={valueDate.startDate}
+                           onChange={(newValue) => handleDateChange(newValue, "startDate")}
                            renderInput={(params) => <TextField {...params} />}
                         />
                      </LocalizationProvider>
-                     <KeyboardDoubleArrowRightIcon></KeyboardDoubleArrowRightIcon>
+                     <KeyboardDoubleArrowRightIcon />
                      <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                            label='Ngày kết thúc'
-                           value={null}
-                           onChange={() => {}}
+                           value={valueDate.endDate}
+                           inputFormat='YYYY-MM-DD hh:mm A' // Định dạng hiển thị
+                           onChange={(newValue) => handleDateChange(newValue, "endDate")}
                            renderInput={(params) => <TextField {...params} />}
                         />
                      </LocalizationProvider>
                      <Button
+                        onClick={() => filterQuetion()}
                         variant='outlined'
                         startIcon={<FilterAltIcon sx={{fontSize: 30}} />}
                         sx={{

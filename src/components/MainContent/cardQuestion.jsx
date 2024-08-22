@@ -33,7 +33,7 @@ import Box from "@mui/material/Box";
 import {FormControl, FormLabel, Input} from "@mui/material";
 import ReactQuill from "react-quill";
 import Slide from "@mui/material/Slide";
-import ModalShowAllAnswer from "./ModalShowAllAnswer";
+import FullScreenDialog from "./ModalShowAllAnswer";
 const Transition = React.forwardRef(function Transition(props, ref) {
    return <Slide direction='up' ref={ref} {...props} />;
 });
@@ -52,7 +52,6 @@ const style = {
 const CardQuestion = ({card, size, setListQuestions}) => {
    const widthCard = size.width / size.size;
    const widthCard_new = widthCard - 10;
-
    const [value, setValue] = useState({title: "", body: "", question_id: ""});
    const [reply, setReply] = useState({text: ""});
    const [openDelete, setOpenDelete] = useState(false);
@@ -82,6 +81,7 @@ const CardQuestion = ({card, size, setListQuestions}) => {
       }
       setOpenAll(true);
    };
+
    const handleCloseAll = () => {
       setOpenAll(false);
    };
@@ -566,7 +566,12 @@ const CardQuestion = ({card, size, setListQuestions}) => {
                </Button>
             </CardActions>
          </Card>
-         <ModalShowAllAnswer isOpen={openAll} onClose={handleCloseAll} listAnswers={listAnswers} />
+         <FullScreenDialog
+            isOpen={openAll}
+            onClose={handleCloseAll}
+            listAnswers={listAnswers}
+            setListAnswers={setListAnswers}
+         />
       </>
    );
 };
