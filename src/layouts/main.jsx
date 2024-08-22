@@ -8,13 +8,14 @@ const Main = () => {
    const [listQuestions, setListQuestions] = useState([]);
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(null);
-
    useEffect(() => {
       const fetchQuestions = async () => {
          try {
             const response = await axiosInstance.get("/questions/get-all");
-            setListQuestions(response.data.data);
-            setLoading(false);
+            if (response.status === 200) {
+               setListQuestions(response.data.data);
+               setLoading(false);
+            }
          } catch (err) {
             console.error("Failed to fetch questions:", err);
             setError(err);

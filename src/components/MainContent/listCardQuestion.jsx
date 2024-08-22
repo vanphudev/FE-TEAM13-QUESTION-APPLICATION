@@ -40,22 +40,10 @@ function ListCard({listQuestions, setListQuestions}) {
                ))}
             </Box>
          ) : (
-            <Box
-               sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                  width: "100%",
-               }}>
-               <h1>There are no questions</h1>
-            </Box>
+            <h1 style={{fontSize: "80px", color: "white", textAlign: "center", height: "50vh"}}>
+               There are no questions !
+            </h1>
          )}
-         <Box sx={{margin: "20px"}}>
-            <Stack spacing={2}>
-               <Pagination count={10} variant='outlined' shape='rounded' size='large' />
-            </Stack>
-         </Box>
       </Box>
    );
 }
