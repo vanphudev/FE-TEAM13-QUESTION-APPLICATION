@@ -20,6 +20,8 @@ import Cookies from "js-cookie";
 import validator from "validator";
 import axiosInstance from "../apis";
 import {useNavigate} from "react-router-dom";
+import ImageLogin from "../assets/images/login.png";
+
 function LoginPage() {
    const navigate = useNavigate();
    const [email, setEmail] = useState("");
@@ -40,7 +42,7 @@ function LoginPage() {
 
    const handleLogin = async (event) => {
       event.preventDefault();
-      if (!email || !password) {
+      if (!email && !password) {
          toast.warn("Email and password are required!", {
             position: "top-right",
             autoClose: 5000,
@@ -56,6 +58,20 @@ function LoginPage() {
       }
       if (!validator.isEmail(email)) {
          toast.warn("Email is not in correct format!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+         });
+         return;
+      }
+      if (!password) {
+         toast.warn("Password is required!", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -137,7 +153,7 @@ function LoginPage() {
             <Grid container spacing={0} style={{height: "100%"}}>
                <Grid item xs={5}>
                   <img
-                     src='https://images.unsplash.com/photo-1665789318391-6057c533005e?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                     src={ImageLogin}
                      alt='Login Illustration'
                      style={{
                         width: "100%",
@@ -159,7 +175,6 @@ function LoginPage() {
                         titleTypographyProps={{
                            variant: "overline",
                            align: "center",
-                           // style: { color: "#1b4332" },
                            fontSize: "3vh",
                         }}
                      />
@@ -167,6 +182,7 @@ function LoginPage() {
                         <form onSubmit={handleLogin}>
                            <div style={{marginBottom: "20px"}}>
                               <TextField
+                                 id='email'
                                  label='Email'
                                  name='email'
                                  fullWidth
@@ -176,15 +192,16 @@ function LoginPage() {
                                     style: {
                                        backgroundColor: "#778da9",
                                        borderRadius: "10px",
+                                       fontSize: "32px",
                                     },
                                  }}
                                  value={email}
                                  onChange={(e) => setEmail(e.target.value)}
                               />
                            </div>
-
                            <div style={{marginBottom: "10px"}}>
                               <TextField
+                                 id='password'
                                  label='Password'
                                  name='password'
                                  fullWidth
@@ -195,10 +212,12 @@ function LoginPage() {
                                     style: {
                                        backgroundColor: "#778da9",
                                        borderRadius: "10px",
+                                       fontSize: "32px",
                                     },
                                     endAdornment: (
                                        <InputAdornment position='end'>
                                           <IconButton
+                                             id='showPassword'
                                              onClick={handleClickShowPassword}
                                              onMouseDown={handleMouseDownPassword}>
                                              {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -211,6 +230,7 @@ function LoginPage() {
                               />
                            </div>
                            <Button
+                              id='loginButton'
                               type='submit'
                               variant='contained'
                               fullWidth
@@ -224,7 +244,6 @@ function LoginPage() {
                               }}>
                               Login
                            </Button>
-
                            <Typography
                               variant='body2'
                               align='right'
